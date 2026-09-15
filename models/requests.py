@@ -7,6 +7,7 @@ def calculate_priority(urgency: int) -> str:
         return "Обычный"
     return "Низкий"
 
+
 def add_request(request):
     pass
 

@@ -1,4 +1,4 @@
-from users import login_user
+from models.users import login_user
 
 
 def test_login_existing_user():

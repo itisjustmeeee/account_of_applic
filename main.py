@@ -1,5 +1,5 @@
-from requests import add_request, show_my_requests
-from users import login_user, register_user
+from models.requests import add_request, show_my_requests
+from models.users import login_user, register_user
 from storage import load_data, save_data
 
 

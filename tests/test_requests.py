@@ -1,4 +1,4 @@
-from requests import calculate_priority
+from models.requests import calculate_priority
 
 
 def test_high_priority():
