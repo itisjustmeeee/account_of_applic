@@ -1,14 +1,26 @@
 [
     {
         "id": 1,
-        "name": "Иван",
-        "password": "1234",
+        "username": "Ivan",
+        "password": "13Hd32Z",
         "role": "user"
     },
     {
         "id": 2,
-        "name": "Администратор",
-        "password": "admin",
+        "username": "New_admin",
+        "password": "Adm9nPas3w0rd",
         "role": "admin"
+    },
+    {
+        "id": 3,
+        "username": "Not_admin_LoL",
+        "password": "32KoP8Ds1",
+        "role": "user"
+    },
+    {
+        "id": 4,
+        "username": "Sas_Kek",
+        "password": "7Gjh%vXz2",
+        "role": "user"
     }
 ]
