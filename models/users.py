@@ -1,6 +1,11 @@
-from models import Category
-from models import Status
-from models import Request
+
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .requests import Request
+    from .category import Category
+    from .statuses import Status
 
 
 class Guest:
@@ -63,6 +68,7 @@ class User:
         status: Status,
         urgency: int
     ) -> Request:
+        from .requests import Request
         return Request(
             request_id,
             self,
@@ -96,23 +102,6 @@ class User:
                 return request
 
         return None
-
-
-def delete_user_request(
-    requests: list[Request],
-    user: User,
-    request_id: int
-) -> bool:
-
-    for request in requests:
-        if (
-            request.id == request_id
-            and request.user.id == user.id
-        ):
-            requests.remove(request)
-            return True
-
-    return False
 
 
 class Admin:
@@ -156,30 +145,3 @@ class Admin:
         new_name: str
     ) -> None:
         status.rename(new_name)
-
-
-def get_all_requests(
-    requests: list[Request]
-) -> list[Request]:
-
-    return requests
-
-
-def delete_request(
-    requests: list[Request],
-    request_id: int
-) -> bool:
-
-    for request in requests:
-        if request.id == request_id:
-            requests.remove(request)
-            return True
-
-    return False
-
-
-def get_all_users(
-    users: list[User]
-) -> list[User]:
-
-    return users

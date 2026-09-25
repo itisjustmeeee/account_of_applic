@@ -1,20 +1,49 @@
-from storage import load_data, save_data
+from models.category import Category
+from models.services import (
+    create_category,
+    get_category_by_id,
+    delete_category
+)
 
 
-def test_save_and_load(tmp_path):
-    """Проверяет сохранение и загрузку данных."""
+def test_create_category():
+    categories = []
 
-    filename = tmp_path / "test.json"
+    category = create_category(
+        categories,
+        1,
+        'Техника',
+        'Технические проблемы с компом или ноутом'
+    )
 
-    data = [
-        {
-            "id": 1,
-            "name": "Ivan"
-        }
-    ]
+    assert isinstance(category, Category)
+    assert category.id == 1
+    assert category.name == 'Техника'
+    assert len(categories) == 1
 
-    save_data(str(filename), data)
 
-    result = load_data(str(filename))
+def test_rename_category():
+    category = Category(1, 'Техника')
 
-    assert result == data
+    category.rename('Проблемы с прог. обеспечением')
+
+    assert category.name == 'Проблемы с прог. обеспечением'
+
+
+def test_get_category_by_id():
+    category = Category(1, 'Техника')
+    categories = [category]
+
+    result = get_category_by_id(categories, 1)
+
+    assert result == category
+
+
+def test_delete_category():
+    category = Category(1, 'Техника')
+    categories = [category]
+
+    result = delete_category(categories, 1)
+
+    assert result is True
+    assert categories == []

@@ -1,6 +1,10 @@
-from models import User
-from models import Category
-from models import Status
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .users import User
+    from .category import Category
+    from .statuses import Status
 
 
 class Request:
@@ -8,14 +12,14 @@ class Request:
         self,
         request_id: int,
         user: User,
-        text: str,
+        description: str,
         category: Category,
         status: Status,
         urgency: int
     ) -> None:
         self.id = request_id
         self.user = user
-        self.text = text
+        self.description = description
         self.category = category
         self.status = status
         self.urgency = urgency
@@ -29,7 +33,7 @@ class Request:
             f'Категория: {self.category.name}\n'
             f'Статус: {self.status.name}\n'
             f'Приоритет: {self.priority}'
-            f'Описание: {self.text}\n'
+            f'Описание: {self.description}\n'
             f'Ответ: {self.answer or 'Ответ отсутствует'}'
         )
 
@@ -37,7 +41,7 @@ class Request:
         self.status = status
 
     def calculate_priority(self) -> str:
-        if self.urgency == 3:
+        if self.urgency == 1:
             return 'Высокий'
         elif self.urgency == 2:
             return 'Обычный'
