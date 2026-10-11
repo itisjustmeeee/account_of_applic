@@ -1,30 +1,13 @@
-{% load static %}
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial=scale=1">
-    <title>Главная</title>
-    <link rel="stylesheet" href="{% static 'styles/homepage.css' %}">
-</head>
-<body>
-    <nav class="nav">
-        <a class="nav-link" href="/">Главная<a>
-        <a class="nav-link" href="requests/">Заявки<a>
-    </nav>
-    <main class="container">
-        <div>
-            <h1>Приветик, это сайт с заметками</h1>
-        </div>
-        <div>
-            <p>Вы можете также перейти к заметкам, нажав<a href="/requests/">сюда</a></p>
-        </div> 
-    </main>
-</body>
-<footer>
-    <p>
-        все права защищены
-    </p>
-</footer>
-</html>
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+    <div>
+        <h1>Это главная страница</h1>
+    </div>
+    <div>
+        <p>Здесь вы можете отправлять свои заявки и получать на них ответы</p>
+        <p>Переместиться в заявки можно <a href="/requests">здесь</a>, а на ответы <a href="/answers">тут</a></p>
+    </div>
+{% endblock %}

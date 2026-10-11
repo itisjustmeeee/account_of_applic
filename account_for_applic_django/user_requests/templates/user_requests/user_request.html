@@ -1,33 +1,14 @@
-{% load static %}
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Заявки</title>
-    <link rel="stylesheet" href="{% static 'styles/homepage.css' %}">
-</head>
-<body>
-    <nav class="nav">
-        <a class="nav-link" href="/">Главная<a>
-        <a class="nav-link" href="requests/">Заявки<a>
-    </nav>
-    <main class="container">
-        <div>
-            <p>здесь будет поиск по завякам</p>
-            <button>Добавить заявку</button>
-        </div>
-        <div>
-            <section>
-                здесь будут карточки с заявками
-            </section>
-        </div>
-    </main>
-</body>
-<footer>
-    <p>
-        все права защищены
-    </p>
-</footer>
-</html>
+{% block title %}Заявки{% endblock %}
+
+{% block content %}
+    <div>
+        <h1>Заявки</h1>
+    </div>
+    <div>
+        <p>перейти на <a href="/">Главную</a></p>
+        <p>здесь будут ваши заметки</p>
+        <button>Добавить заявку</button>
+    </div>
+{% endblock %}
