@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Добавить заявку{% endblock %}
+
+{% block content %}
+    <div class="create-request-page">
+        <h1>Добавить заявку</h1>
+        <form method="post" class="request-form">
+            {% csrf_token %}
+
+            <label for="user">
+                Пользователь
+            </label>
+
+            <select
+                id="user"
+                name="user"
+                required
+            >
+                <option value="">
+                    Выберите пользователя
+                </option>
+
+                {% for user in users %}
+                    <option value="{{ user.id }}">
+                        {{ user.username }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <label for="category">
+                Категория:
+            </label>
+            <select
+                id="category"
+                name="category"
+                required
+            >
+
+                <option value="">
+                    Выберите категорию
+                </option>
+
+                {% for category in categories %}
+                    <option value="{{ category.id }}">
+                        {{ category.name }}
+                    </option>
+                {% endfor %}
+            </select>
+            
+            <label for="description">
+                Описание:
+            </label>
+            <textarea
+                id="description"
+                name="description"
+                required
+            ></textarea>
+
+            <label for="priority">
+                Приоритет:
+            </label>
+            <select
+                id="priority"
+                name="priority"
+                required
+            >
+                <option value="Низкий">Низкий</option>
+                <option value="Средний" selected>
+                    Средний
+                </option>
+                <option value="Высокий">Высокий</option>
+            </select>
+
+            <button type="submit">
+                Создать заявку
+            </button>
+        </form>
+    </div>
+{% endblock %}

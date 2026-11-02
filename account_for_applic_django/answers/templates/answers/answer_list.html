@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Ответы на заявки{% endblock %}
+
+{% block content %}
+    <div class="request-page">
+        <div class="request-header">
+            <h1>Заявки без ответов</h1>
+            <form method="get" class="search-form">
+                <input
+                    type="search"
+                    name="search"
+                    placeholder="Поиск заявок..."
+                    value="{{ search }}"
+                >
+                <button type="submit">
+                    Найти
+                </button>
+            </form>
+            <form method="get">
+                <select name="status">
+                    <option value="">Все статусы</option>
+                    <option value="Новая">Новые</option>
+                    <option value="В работе">В работе</option>
+                </select>
+                <button type="submit">Фильтровать</button>
+            </form>
+        </div>
+        <div class="request-list">
+            {% for request in requests %}
+                {% include 'answers/includes/answer_card.html' %}
+            {% empty %}
+                <p>Нет новых заявок без ответа</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

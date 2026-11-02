@@ -1,0 +1,17 @@
+<article class="request-card">
+    <h2>{{ request.id }}</h2>
+    <p>
+        Категория:
+        <strong>{{ request.category }}</strong>
+    </p>
+    <p>
+        Статус:
+        <strong>{{ request.status }}</strong>
+    </p>
+    <a
+        class="page-link"
+        href="{% url 'user_requests:detail' request.id %}"
+    >
+        Подробнее
+    </a>
+</article>

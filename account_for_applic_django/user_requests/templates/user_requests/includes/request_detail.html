@@ -1,0 +1,29 @@
+<article class="detail-card">
+    <h3>{{ request.id }}</h3>
+    <p>
+        Категория:
+        <strong>{{ request.category }}</strong>
+    </p>
+    <p>
+        Статус:
+        <strong>{{ request.status }}</strong>
+    </p>
+    <p>
+        Проблема:
+        <strong>{{ request.description }}</strong>
+    </p>
+    <p>
+        Кем отправлено:
+        <strong>{{ request.user }}</strong>
+    </p>
+    {% if request.answer %}
+        <p>
+            Ответ:
+            {{ request.answer }}
+        </p>
+    {% else %}
+        <p>
+            Ответа пока нет
+        </p>
+    {% endif %}
+</article>

@@ -1,0 +1,19 @@
+<div class="user-info">
+    <h2>{{ profile.user.username }}<h2>
+
+    <p>
+        ID пользователя: {{ profile.user.id }}
+    </p>
+    <p>
+        Роль: {{ profile.get_role_display }}
+    </p>
+    <p>
+        Дата регистрации:
+        {{ profile.user.data_joined|date: "d.m.Y" }}
+    </p>
+    {% if profile.user.email %}
+        <p>
+            Электронная почта: {{ profile.user.email }}
+        </p>
+    {% endif %}
+</div>

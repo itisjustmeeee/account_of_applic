@@ -21,7 +21,7 @@ from user_requests.views import page_not_found
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('homepage.urls')),
-    path('requests/', include('user_requests.urls')),
+    path('user_requests/', include('user_requests.urls')),
     path('answers/', include('answers.urls')),
     path('users/', include('users.urls'))
 ]

@@ -1,0 +1,21 @@
+<article class="detail-card">
+    <h3>Заявка №{{ request.id }}</h3>
+    <p>
+        Категория:
+        <strong>{{ request.category }}</strong>
+    </p>
+    <p>
+        Статус:
+        <strong>{{ request.status }}</strong>
+    </p>
+    <p>
+        Кем отправлено:
+        <strong>{{ request.user }}</strong>
+    </p>
+    <a
+        class="page_link_page"
+        href="{% url 'answers:add' request.id %}"
+    >
+        Добавить ответ
+    </a>
+</article>

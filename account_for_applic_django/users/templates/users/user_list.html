@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Пользователи{% endblock %}
+
+{% block content %}
+    <div class="users-page">
+        <h1>Пользователи</h1>
+        <div class="users-list">
+            {% for profile in profiles %}
+                <div class="user-card">
+                    <h2>{{ profile.user.username }}</h2>
+                    <p>
+                        Роль: {{ profile.get_role_display }}
+                    </p>
+                    <a href="{% url 'users:detail' profile.user_id %}">
+                        Подробнее
+                    </a>
+                </div>
+            {% empty %}
+                <p>Пользователи не найдены</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

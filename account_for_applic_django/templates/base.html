@@ -7,11 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Главная{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'styles/homepage.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/request_style.css' %}">
+    <link href="https://jsdelivr.net" rel="stylesheet">
 </head>
 <body>
     <nav class="nav">
         <a class="nav-link" href="/">Главная</a>
-        <a class="nav-link" href="/requests">Заявки</a>
+        <a class="nav-link" href="/user_requests">Заявки</a>
         <a class="nav-link" href="/answers">Ответы</a>
         <a class="nav-link" href="/users">Профиль</a>
     </nav>

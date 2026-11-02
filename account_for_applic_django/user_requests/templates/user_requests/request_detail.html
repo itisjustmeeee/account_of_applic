@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Заявка {{ request.id }}{% endblock %}
+
+{% block content %}
+<div class="request-page">
+    {% include 'user_requests/includes/request_detail.html' %}
+    <hr>
+    <a class="page_link_new" href="{% url 'user_requests:list' %}">
+        Вернуться к заявкам
+    </a>
+</div>
+{% endblock %}
