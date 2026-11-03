@@ -5,6 +5,12 @@
 {% block content %}
     <div class="user-detail">
         <h1>Профиль пользователя</h1>
-        
+
+        {% include 'users/includes/user_card.html' %}
+
+        <hr>
+        <a href="{% url 'users:list' %}">
+            Вернуться к пользователям
+        </a>
     </div>
 {% endblock %}

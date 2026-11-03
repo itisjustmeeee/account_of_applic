@@ -2,15 +2,15 @@
     <h3>Заявка №{{ request.id }}</h3>
     <p>
         Категория:
-        <strong>{{ request.category }}</strong>
+        <strong>{{ request.category.name }}</strong>
     </p>
     <p>
         Статус:
-        <strong>{{ request.status }}</strong>
+        <strong>{{ request.status.name }}</strong>
     </p>
     <p>
         Кем отправлено:
-        <strong>{{ request.user }}</strong>
+        <strong>{{ request.user.username }}</strong>
     </p>
     <a
         class="page_link_page"

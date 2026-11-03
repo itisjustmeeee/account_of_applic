@@ -1,0 +1,160 @@
+.statistics-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+.statistics-page h1 {
+    margin-bottom: 30px;
+    color: #263445;
+    font-size: 30px;
+    text-align: center;
+}
+
+.statistics-section {
+    margin-bottom: 30px;
+    padding: 25px;
+    background-color: #ffffff;
+    border: 1px solid #898989;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+}
+
+.statistics-section h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #34495e;
+    font-size: 21px;
+}
+
+.statistics-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 18px;
+}
+
+.stat-card {
+    padding: 20px;
+    background-color: #f4f7fb;
+    border: 1px solid #e1e8f0;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.8);
+}
+
+.stat-card h3 {
+    margin: 0 0 12px;
+    color: #64748b;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.stat-card p {
+    margin: 0;
+    color: #263445;
+    font-size: 27px;
+    font-weight: 700;
+}
+
+.table-scroll {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.statistics-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.statistics-table th,
+.statistics-table td {
+    padding: 13px 15px;
+    border-bottom: 1px solid #e5eaf0;
+}
+
+.statistics-table th {
+    background-color: #f1f5f9;
+    color: #34495e;
+    font-weight: 600;
+}
+
+.statistics-table td {
+    color: #475569;
+}
+
+.statistics-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+.statistics-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 9px 15px;
+    color: #ffffff;
+    background-color: #4361ee;
+    border-radius: 7px;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.pagination a:hover {
+    background-color: #3049c5;
+}
+
+.pagination-current {
+    padding: 9px 15px;
+    color: #34495e;
+    font-weight: 600;
+}
+
+@media (max-width: 600px) {
+    .statistics-page {
+        padding: 20px 10px;
+    }
+
+    .statistics-section {
+        padding: 15px;
+    }
+
+    .statistics-page h1 {
+        font-size: 24px;
+    }
+
+    .statistics-section h2 {
+        font-size: 18px;
+    }
+
+    .statistics-table th,
+    .statistics-table td {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .pagination {
+        gap: 6px;
+    }
+
+    .pagination a,
+    .pagination-current {
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+}

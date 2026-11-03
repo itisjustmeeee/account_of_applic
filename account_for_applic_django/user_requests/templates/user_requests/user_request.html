@@ -13,18 +13,32 @@
                     placeholder="Поиск заявок..."
                     value="{{ search }}"
                 >
+                <select name="status">
+                    <option value="">
+                        Все статусы
+                    </option>
+                    <option
+                        value="Новая"
+                        {% if status == 'Новая' %}selected{% endif %}
+                    >
+                        Новая
+                    </option>
+                    <option
+                        value="В работе"
+                        {% if status == 'В работе' %}selected{% endif %}
+                    >
+                        В работе
+                    </option>
+                    <option
+                        value="Завершена"
+                        {% if status == 'Завершена' %}selected{% endif %}
+                    >
+                        Завершенные
+                    </option>
+                </select>
                 <button type="submit">
                     Найти
                 </button>
-            </form>
-            <form method="get">
-                <select name="status">
-                    <option value="">Все статусы</option>
-                    <option value="Новая">Новые</option>
-                    <option value="В работе">В работе</option>
-                    <option value="Решена">Решенные</option>
-                </select>
-                <button type="submit">Фильтровать</button>
             </form>
             <a class="button" href="{% url 'user_requests:create' %}">Добавить заявку</a>
         </div>
@@ -34,6 +48,9 @@
             {% empty %}
                 <p>Пока нет заявок</p>
             {% endfor %}
+        </div>
+        <div>
+            {% include 'user_requests/includes/pagination.html' %}
         </div>
     </div>
 {% endblock %}

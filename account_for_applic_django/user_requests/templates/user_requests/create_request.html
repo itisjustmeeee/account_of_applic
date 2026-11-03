@@ -8,6 +8,12 @@
         <form method="post" class="request-form">
             {% csrf_token %}
 
+            {% if error %}
+                <p class="error-message">
+                    {{ error }}
+                </p>
+            {% endif %}
+
             <label for="user">
                 Пользователь
             </label>

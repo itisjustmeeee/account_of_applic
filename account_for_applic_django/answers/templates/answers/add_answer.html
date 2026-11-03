@@ -8,11 +8,11 @@
 
     <p>
         Пользователь:
-        <strong>{{ request_item.user }}</strong>
+        <strong>{{ request_item.user.username }}</strong>
     <p>
     <p>
         Категория:
-        <strong>{{ request_item.category }}</strong>
+        <strong>{{ request_item.category.name }}</strong>
     </p>
     <p>
         Проблема:
@@ -22,25 +22,51 @@
         Приоритет:
         <strong>{{ request_item.priority }}</strong>
     </p>
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
     <form
         method="post"
         action="{% url 'answers:add' request_item.id %}"
         class="request-form"
     >
         {% csrf_token %}
-        <label for="answer">Ответ на заявку:</label>
+        <label for="author">
+            Кто добавляет ответ:
+        </label>
+
+        <select
+            id="author"
+            name="author"
+            required
+        >
+            <option value="">
+                Выберите администратора
+            </option>
+
+            {% for profile in admin_profiles %}
+                <option
+                    value="{{ profile.user.id }}"
+                    {% if profile.user.id == selected_author_id %}
+                        selected
+                    {% endif %}
+                >
+                    {{ profile.user.username }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <label for="answer">
+            Ответ на заявку:
+        </label>
 
         <textarea
             id="answer"
             name="answer"
-            placeholder="введите ответ..."
+            rows="6"
+            placeholder="Введите ответ..."
             required
-        >
-        </textarea>
-
-        {% if error %}
-            <p class="error-message">{{ error }}</p>
-        {% endif %}
+        ></textarea>
 
         <button type="submit">
             Отправить ответ

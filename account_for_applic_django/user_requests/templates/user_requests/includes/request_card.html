@@ -2,11 +2,15 @@
     <h2>{{ request.id }}</h2>
     <p>
         Категория:
-        <strong>{{ request.category }}</strong>
+        <strong>{{ request.category.name }}</strong>
     </p>
     <p>
         Статус:
-        <strong>{{ request.status }}</strong>
+        <strong>{{ request.status.name }}</strong>
+    </p>
+    <p>
+        Пользователь:
+        <strong>{{ request.user.username }}</strong>
     </p>
     <a
         class="page-link"

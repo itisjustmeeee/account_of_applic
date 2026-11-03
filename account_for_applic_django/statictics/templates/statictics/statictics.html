@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+
+{% block title %}Статистика{% endblock %}
+
+{% block content %}
+    <h1>Статистика заявок</h1>
+    <section class="statistics-section">
+        <h2>Общая статистика</h2>
+
+        <div class="statistics-cards">
+            <div class="stat-card">
+                <h3>Всего заявок</h3>
+                <p>{{ total_stats.total_requests }}</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>С ответом</h3>
+                <p>{{ total_stats.answered_requests }}</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>Без ответа</h3>
+                <p>{{ total_stats.unanswered_requests }}</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>Средний приоритет</h3>
+                <p>
+                    {{ total_stats.average_priority|floatformat:2 }}
+                </p>
+            </div>
+
+            <div class="stat-card">
+                <h3>Минимальный приоритет</h3>
+                <p>{{ total_stats.min_priority }}</p>
+            </div>
+        </div>
+    </section>
+    <section class="statistics-section">
+        <h2>Заявки по категориям</h2>
+        <div class="table-scroll">
+            <table class="statistics-table">
+                <thead>
+                    <tr>
+                        <th>Категория</th>
+                        <th>Количество заявок</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in categories_stats %}
+                        <tr>
+                            <td>
+                                {{ item.category__name }}
+                            </td>
+                            <td>
+                                {{ item.request_count }}
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="2">
+                                Нет данных
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <section class="statistics-section">
+        <h2>Заявки по статусам</h2>
+        <div class="table-scroll">
+            <table class="statistics-table">
+                <thead>
+                    <tr>
+                        <th>Статус</th>
+                        <th>Количество заявок</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in statuses_stats %}
+                        <tr>
+                            <td>
+                                {{ item.status__name }}
+                            </td>
+                            <td>
+                                {{ item.request_count }}
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="2">
+                                Нет данных
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <section class="statistics-section">
+        <h2>Заявки по пользователям</h2>
+        <div class="table-scroll">
+            <table class="statistics-table">
+                <thead>
+                    <tr>
+                        <th>Пользователь</th>
+                        <th>Количество заявок</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users_stats %}
+                        <tr>
+                            <td>
+                                {{ user.username }}
+                            </td>
+                            <td>
+                                {{ user.requests_count }}
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="2">
+                                Нет данных
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <section class="statistics-section">
+        <h2>Заявки и отклонение приоритета от среднего</h2>
+        <div class="table-scroll">
+            <table class="statistics-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Пользователь</th>
+                        <th>Категория</th>
+                        <th>Приоритет</th>
+                        <th>Отклонение</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in page_obj %}
+                        <tr>
+                            <td>
+                                {{ item.id }}
+                            </td>
+                            <td>
+                                {{ item.user.username }}
+                            </td>
+                            <td>
+                                {{ item.category.name }}
+                            </td>
+                            <td>
+                                {{ item.priority }}
+                            </td>
+                            <td>
+                                {{ item.priority_difference|floatformat:2 }}
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="5">
+                                Нет данных
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <div>
+        {% include 'user_requests/includes/pagination.html' %}
+    </div>
+{% endblock %}

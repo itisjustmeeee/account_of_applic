@@ -1,12 +1,12 @@
 <article class="detail-card">
-    <h3>{{ request.id }}</h3>
+    <h3>Заявка №{{ request.id }}</h3>
     <p>
         Категория:
-        <strong>{{ request.category }}</strong>
+        <strong>{{ request.category.name }}</strong>
     </p>
     <p>
         Статус:
-        <strong>{{ request.status }}</strong>
+        <strong>{{ request.status.name }}</strong>
     </p>
     <p>
         Проблема:
@@ -14,12 +14,24 @@
     </p>
     <p>
         Кем отправлено:
-        <strong>{{ request.user }}</strong>
+        <strong>{{ request.user.username }}</strong>
     </p>
-    {% if request.answer %}
+    <p>
+        Приоритет:
+        <strong>{{ request.priority }}</strong>
+    </p>
+    {% if request.answer_record %}
+        <h3>Ответ на заявку</h3>
         <p>
-            Ответ:
-            {{ request.answer }}
+            {{ request.answer_record.text }}
+        </p>
+        <p>
+            Автор:
+            {{ request.answer_record.author.username|default:"Не указан" }}
+        </p>
+        <p>
+            Дата ответа:
+            {{ request.answer_record.created_at|date:"d.m.Y H:i" }}
         </p>
     {% else %}
         <p>

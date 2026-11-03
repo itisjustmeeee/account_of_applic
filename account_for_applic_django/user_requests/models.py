@@ -1,12 +1,11 @@
 from django.db import models
+from django.conf import settings
+
+from category.models import Category
+from statuses.models import RequestStatus
 
 
 class UserRequest(models.Model):
-    STATUS_CHOICES = [
-        ('Новая', 'Новая'),
-        ('В работе', 'В работе'),
-        ('Решена', 'Решена'),
-    ]
 
     PRIORITY_CHOICES = [
         ('Низкий', 'Низкий'),
@@ -14,39 +13,36 @@ class UserRequest(models.Model):
         ('Высокий', 'Высокий'),
     ]
 
-    user = models.CharField(
-        max_length=100,
-        verbose_name='Пользователь',
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='requests',
+        verbose_name='Пользователь'
     )
 
-    category = models.CharField(
-        max_length=100,
-        verbose_name='Категория',
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.PROTECT,
+        related_name='requests',
+        verbose_name='Категория'
+    )
+
+    status = models.ForeignKey(
+        RequestStatus,
+        on_delete=models.PROTECT,
+        related_name='requests',
+        verbose_name='Статус'
     )
 
     description = models.TextField(
-        max_length=100,
-        verbose_name='Описание',
-    )
-
-    status = models.CharField(
-        max_length=30,
-        choices=STATUS_CHOICES,
-        default='Новая',
-        verbose_name='Статус',
+        verbose_name='Описание'
     )
 
     priority = models.CharField(
-        max_length=20,
+        max_length=25,
         choices=PRIORITY_CHOICES,
         default='Средний',
         verbose_name='Приоритет',
-    )
-
-    answer = models.TextField(
-        blank=True,
-        default='',
-        verbose_name='Ответ'
     )
 
     created_at = models.DateTimeField(

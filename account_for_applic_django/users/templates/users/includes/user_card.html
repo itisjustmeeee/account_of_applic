@@ -1,5 +1,5 @@
 <div class="user-info">
-    <h2>{{ profile.user.username }}<h2>
+    <h2>{{ profile.user.username }}</h2>
 
     <p>
         ID пользователя: {{ profile.user.id }}
@@ -9,7 +9,7 @@
     </p>
     <p>
         Дата регистрации:
-        {{ profile.user.data_joined|date: "d.m.Y" }}
+        {{ profile.user.date_joined|date:"d.m.Y" }}
     </p>
     {% if profile.user.email %}
         <p>
