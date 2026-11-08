@@ -24,7 +24,8 @@ urlpatterns = [
     path('user_requests/', include('user_requests.urls')),
     path('answers/', include('answers.urls')),
     path('users/', include('users.urls')),
-    path('statictics/', include('statictics.urls'))
+    path('statictics/', include('statictics.urls')),
+    path('categories/', include('category.urls')),
 ]
 
 handler404 = page_not_found

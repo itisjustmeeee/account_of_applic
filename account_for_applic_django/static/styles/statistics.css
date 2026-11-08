@@ -44,7 +44,7 @@
 
 .stat-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.35);
 }
 
 .stat-card h3 {

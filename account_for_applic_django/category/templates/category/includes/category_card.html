@@ -1,0 +1,9 @@
+<div class="categories-card">
+    <h2>{{ category.name }}</h2>
+
+    {% if category.description %}
+        <p>{{ category.description }}</p>
+    {% else %}
+        <p>Нет описания</p>
+    {% endif %}
+</div>

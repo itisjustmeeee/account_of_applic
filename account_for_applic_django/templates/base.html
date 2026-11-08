@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{% static 'styles/request_style.css' %}">
     <link rel="stylesheet" href="{% static 'styles/users.css' %}">
     <link rel="stylesheet" href="{% static 'styles/statistics.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/category.css' %}">
     <link href="https://jsdelivr.net" rel="stylesheet">
 </head>
 <body>
@@ -19,6 +20,7 @@
         <a class="nav-link" href="/answers">Ответы</a>
         <a class="nav-link" href="/users">Пользователи</a>
         <a class="nav-link" href="/statictics">Статистика</a>
+        <a class="nav-link" href="/categories">Категории</a>
     </nav>
     <main class="container">
         {% block content %}{% endblock %}

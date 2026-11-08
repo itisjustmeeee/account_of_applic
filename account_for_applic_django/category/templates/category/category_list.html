@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Категории{% endblock %}
+
+{% block content %}
+    <div class="categories-page">
+        <h1>Категории заявок</h1>
+
+        <a href="{% url 'category:create' %}" class="add-category">
+            Добавить категорию
+        </a>
+
+        <div class="categories-grid">
+            {% for category in categories %}
+                {% include 'category/includes/category_card.html' %}
+            {% empty %}
+                <p>Категории пока не добавлены</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
