@@ -15,10 +15,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, URLPattern, URLResolver
 from user_requests.views import page_not_found
+from debug_toolbar.toolbar import debug_toolbar_urls
+from django.conf import settings
 
-urlpatterns = [
+urlpatterns: list[URLPattern | URLResolver] = [
     path('admin/', admin.site.urls),
     path('', include('homepage.urls')),
     path('user_requests/', include('user_requests.urls')),
@@ -27,5 +29,8 @@ urlpatterns = [
     path('statictics/', include('statictics.urls')),
     path('categories/', include('category.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += debug_toolbar_urls()
 
 handler404 = page_not_found

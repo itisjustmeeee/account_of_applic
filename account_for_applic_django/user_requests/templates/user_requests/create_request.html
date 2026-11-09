@@ -71,11 +71,15 @@
                 name="priority"
                 required
             >
-                <option value="Низкий">Низкий</option>
-                <option value="Средний" selected>
-                    Средний
-                </option>
-                <option value="Высокий">Высокий</option>
+                <option value="">Выберите приоритет</option>
+                {% for value, label in priority_choices %}
+                    <option
+                        value="{{ value }}"
+                        {% if selected_priority == value %}selected{% endif %}
+                    >
+                        {{ label }}
+                    </option>
+                {% endfor %}
             </select>
 
             <button type="submit">

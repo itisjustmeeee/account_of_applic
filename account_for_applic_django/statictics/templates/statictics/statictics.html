@@ -155,7 +155,7 @@
                                 {{ item.category.name }}
                             </td>
                             <td>
-                                {{ item.priority }}
+                                {{ item.get_priority_display }}
                             </td>
                             <td>
                                 {{ item.priority_difference|floatformat:2 }}

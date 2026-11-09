@@ -55,6 +55,7 @@ def create_request(request):
     users = User.objects.filter(is_active=True)
 
     error = ''
+    selected_priority = ''
 
     if request.method == 'POST':
         description = request.POST.get(
@@ -64,12 +65,14 @@ def create_request(request):
 
         category_id = request.POST.get('category')
         user_id = request.POST.get('user')
-        priority = request.POST.get('priority')
+        priority = request.POST.get('priority', '')
+
+        selected_priority = priority
 
         if not description:
             error = 'Введите описание заявки'
 
-        elif priority not in dict(UserRequest.PRIORITY_CHOICES):
+        elif priority not in UserRequest.Priority.values:
             error = 'Выберите корректный приоритет'
 
         else:
@@ -106,6 +109,8 @@ def create_request(request):
             'categories': categories,
             'users': users,
             'error': error,
+            'priority_choices': UserRequest.Priority.choices,
+            'selected_priority': selected_priority,
         },
     )
 

@@ -15,6 +15,7 @@ def register_sqlite_functions(sender, connection, **kwargs):
 class UserRequestsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'user_requests'
+    verbose_name = 'Заявки пользователей'
 
     def ready(self):
         from . import look_ups

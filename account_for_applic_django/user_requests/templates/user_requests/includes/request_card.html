@@ -14,7 +14,7 @@
     </p>
     <a
         class="page-link"
-        href="{% url 'user_requests:detail' request.id %}"
+        href="{{ request.get_absolute_url }}"
     >
         Подробнее
     </a>

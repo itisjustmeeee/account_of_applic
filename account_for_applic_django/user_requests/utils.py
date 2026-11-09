@@ -1,4 +1,4 @@
-
+from .models import UserRequest
 from django.db.models import Q
 from django.core.paginator import Paginator
 
@@ -22,12 +22,21 @@ def filter_requests(
     search = (search or '').strip()
 
     if search:
-        condition = (
+        condition = Q()
+
+        priority_values = [
+            value
+            for value, label in UserRequest.Priority.choices
+            if search.casefold() in label.casefold()
+        ]
+
+        condition |= (
             Q(description__unicode_icontains=search)
             | Q(user__username__unicode_icontains=search)
             | Q(category__name__unicode_icontains=search)
             | Q(status__name__unicode_icontains=search)
             | Q(priority__unicode_icontains=search)
+            | Q(priority__in=priority_values)
             | Q(answer_record__text__unicode_icontains=search)
         )
 

@@ -12,7 +12,7 @@
                     <p>
                         Роль: {{ profile.get_role_display }}
                     </p>
-                    <a href="{% url 'users:detail' profile.user_id %}">
+                    <a href="{{ profile.get_absolute_url }}">
                         Подробнее
                     </a>
                 </div>

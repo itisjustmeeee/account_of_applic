@@ -7,8 +7,6 @@ from django.db.models import (
     Min,
     Q,
     Value,
-    Case,
-    When,
     FloatField,
     ExpressionWrapper
 )
@@ -18,15 +16,7 @@ from user_requests.utils import paginate_queryset
 
 
 def statictics(request):
-    requests_queryset = UserRequest.objects.annotate(
-        priority_number=Case(
-            When(priority='Низкий', then=Value(1.0)),
-            When(priority='Средний', then=Value(2.0)),
-            When(priority='Высокий', then=Value(3.0)),
-            default=Value(None, output_field=FloatField()),
-            output_field=FloatField(),
-        )
-    )
+    requests_queryset = UserRequest.objects.all()
 
     total_stats = requests_queryset.aggregate(
         total_requests=Count('id'),
@@ -81,28 +71,22 @@ def statictics(request):
         )
     )
 
-    average_priority = total_stats['average_priority'] or 0.0
+    average_priority = total_stats['average_priority'] or 0
 
-    requests_with_difference = (
-        requests_queryset
-        .annotate(
-            priority_difference=ExpressionWrapper(
-                F('priority_number')
-                - Value(
-                    average_priority,
-                    output_field=FloatField(),
-                ),
+    requests_with_difference = requests_queryset.annotate(
+        priority_difference=ExpressionWrapper(
+            F('priority_number') - Value(
+                average_priority,
                 output_field=FloatField(),
-            )
+            ),
+            output_field=FloatField(),
         )
-        .select_related(
-            'user',
-            'category',
-            'status'
-        )
-        .order_by(
-            '-priority_difference'
-        )
+    ).select_related(
+        'user',
+        'category',
+        'status',
+    ).order_by(
+        '-priority_difference'
     )
 
     page_obj, pagination_query = paginate_queryset(

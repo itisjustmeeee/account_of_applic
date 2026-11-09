@@ -28,5 +28,10 @@ class Answer(models.Model):
         verbose_name='Дата ответа',
     )
 
+    class Meta:
+        ordering = ['id']
+        verbose_name = 'Ответ'
+        verbose_name_plural = 'Ответы'
+
     def __str__(self):
         return f'Ответ на заявку №{self.request_id}'
