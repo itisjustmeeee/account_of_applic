@@ -20,7 +20,7 @@
     </p>
     <p>
         Приоритет:
-        <strong>{{ request_item.priority }}</strong>
+        <strong>{{ request_item.get_priority_display }}</strong>
     </p>
     {% if error %}
         <p class="error">{{ error }}</p>

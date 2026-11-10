@@ -1,5 +1,45 @@
 from django.contrib import admin
 from .models import UserRequest
+from answers.models import Answer
+from django.contrib.auth import get_user_model
+
+
+User = get_user_model()
+
+
+class AnswerInline(admin.StackedInline):
+    model = Answer
+
+    extra = 1
+    max_num = 1
+
+    fields = (
+        'author',
+        'text',
+        'created_at',
+    )
+
+    readonly_fields = (
+        'created_at',
+    )
+
+    def formfield_for_foreignkey(
+            self,
+            db_field,
+            request,
+            **kwargs
+    ):
+        if db_field.name == 'author':
+            kwargs['queryset'] = User.objects.filter(
+                is_active=True,
+                profile__role='admin',
+            ).order_by('username')
+
+        return super().formfield_for_foreignkey(
+            db_field,
+            request,
+            **kwargs,
+        )
 
 
 @admin.register(UserRequest)
@@ -54,6 +94,10 @@ class UserRequestAdmin(admin.ModelAdmin):
         'priority',
         'created_at',
     )
+
+    inlines = [
+        AnswerInline,
+    ]
 
     @admin.display(description='Описание заявки')
     def short_description(self, obj):

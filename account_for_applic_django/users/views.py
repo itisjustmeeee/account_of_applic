@@ -32,3 +32,5 @@ def user_detail(request, user_id):
             'profile': profile
         }
     )
+
+    """superuser - new_superuser, sas@gmail.com, 1328Hg9LkpRa5"""
