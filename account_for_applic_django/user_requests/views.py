@@ -5,23 +5,30 @@ from .utils import filter_requests, paginate_queryset
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
+from .forms import RequestFilterForm
 
 User = get_user_model()
 
 
 def user_request(request):
-    search = request.GET.get('search', '')
-    status = request.GET.get('status', '')
 
-    requests = filter_requests(
-        UserRequest.objects.select_related(
-            'user',
-            'category',
-            'status',
-        ),
-        search=search,
-        status=status,
+    filter_form = RequestFilterForm(request.GET or None)
+
+    requests = UserRequest.objects.select_related(
+        'user',
+        'category',
+        'status',
     )
+
+    if filter_form.is_valid():
+        requests = filter_requests(
+            requests,
+            search=filter_form.cleaned_data['search'],
+            status=filter_form.cleaned_data['status'],
+            category=filter_form.cleaned_data['category'],
+            priority=filter_form.cleaned_data['priority'],
+            unanswered_only=filter_form.cleaned_data['unanswered_only'],
+        )
 
     page_obj, pagination_query = paginate_queryset(
         request,
@@ -36,8 +43,7 @@ def user_request(request):
             'requests': page_obj.object_list,
             'page_obj': page_obj,
             'pagination_query': pagination_query,
-            'search': search,
-            'status': status,
+            'filter_form': filter_form
         },
     )
 

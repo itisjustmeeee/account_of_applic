@@ -5,22 +5,29 @@ from .models import Answer
 from user_requests.utils import filter_requests, paginate_queryset
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db import transaction
+from user_requests.forms import AnswerRequestFilterForm
 
 
 def answer_list(request):
-    search = request.GET.get('search', '')
-    status = request.GET.get('status', '')
 
-    requests = filter_requests(
-        UserRequest.objects.select_related(
+    filter_form = AnswerRequestFilterForm(request.GET or None)
+
+    requests = UserRequest.objects.filter(
+        answer_record__isnull=True
+    ).select_related(
             'user',
             'category',
             'status',
-        ),
-        search=search,
-        status=status,
-        unanswered_only=True,
     )
+
+    if filter_form.is_valid():
+        requests = filter_requests(
+            requests,
+            search=filter_form.cleaned_data['search'],
+            status=filter_form.cleaned_data['status'],
+            category=filter_form.cleaned_data['category'],
+            priority=filter_form.cleaned_data['priority'],
+        )
 
     page_obj, pagination_query = paginate_queryset(
         request,
@@ -34,9 +41,8 @@ def answer_list(request):
         {
             'requests': page_obj.object_list,
             'page_obj': page_obj,
-            'pagination_query': paginate_queryset,
-            'search': search,
-            'status': status,
+            'pagination_query': pagination_query,
+            'filter_form': filter_form
         },
     )
 

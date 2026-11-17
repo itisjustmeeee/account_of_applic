@@ -6,38 +6,19 @@
     <div class="request-page">
         <div class="request-header">
             <h1>Заявки без ответов</h1>
-            <form method="get" class="search-form">
-                <input
-                    type="search"
-                    name="search"
-                    placeholder="Поиск заявок..."
-                    value="{{ search }}"
-                >
-                <select name="status">
-                    <option value="">Все статусы</option>
+            <form method="get" class="request-filter">
+                
+                {{ filter_form.as_p }}
 
-                    <option
-                        value="Новая"
-                        {% if status == 'Новая' %}selected{% endif %}
-                    >
-                        Новые
-                    </option>
-                    <option
-                        value="В работе"
-                        {% if status == 'В работе' %}selected{% endif %}
-                    >
-                        В работе
-                    </option>
-                    <option
-                        value="Завершена"
-                        {% if status == 'Завершена' %}selected{% endif %}
-                    >
-                        Завершенные
-                    </option>
-                </select>
-                <button type="submit">
-                    Найти
-                </button>
+                <div class="filter-buttons">
+                    <button type="submit">
+                        Применить фильтры
+                    </button>
+
+                    <a href="{% url 'answers:list' %}">
+                        Сбросить
+                    </a>
+                </div>
             </form>
         </div>
         <div class="request-list">

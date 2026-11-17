@@ -6,7 +6,9 @@ from django.core.paginator import Paginator
 def filter_requests(
     queryset,
     search='',
-    status='',
+    status=None,
+    category=None,
+    priority='',
     unanswered_only=False,
 ):
     if unanswered_only:
@@ -16,7 +18,17 @@ def filter_requests(
 
     if status:
         queryset = queryset.filter(
-            status__name=status
+            status=status
+        )
+
+    if category:
+        queryset = queryset.filter(
+            category=category
+        )
+
+    if priority:
+        queryset = queryset.filter(
+            priority=priority
         )
 
     search = (search or '').strip()
