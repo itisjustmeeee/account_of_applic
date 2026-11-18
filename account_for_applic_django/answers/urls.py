@@ -10,4 +10,14 @@ urlpatterns = [
         views.add_answer,
         name='add',
     ),
+    path(
+        'requests/<int:request_id>/edit/',
+        views.editAnswer,
+        name='edit'
+    ),
+    path(
+        'requests/<int:request_id>/delete/',
+        views.deleteAnswer,
+        name='delete'
+    ),
 ]

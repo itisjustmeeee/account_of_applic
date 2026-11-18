@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Редактирование заявки{% endblock %}
+
+{% block content %}
+    <div class="create-request-page">
+        <h1>Изменить заявку №{{ request.id }}</h1>
+
+        <form method="POST" class="request-form" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="form-errors">
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+                <div class="form-field">
+
+                    {{ field.label_tag }}
+
+                    {{ field }}
+
+                    {% if field.help_text %}
+                        <small>{{ field.help_text }}</small>
+                    {% endif %}
+
+                    {% if field.errors %}
+                        <div class="field-errors">
+                            {% for error in field.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                </div>
+            {% endfor %}
+
+            <hr>
+
+            <button type="submit">
+                Подтвердить
+            </button>
+        </form>
+        <a href="{% url 'user_requests:detail' request.id %}">
+            Отмена
+        </a>
+    </div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Удаление ответа{% endblock %}
+
+{% block content %}
+    <div class="create-request-page">
+        <h1>Удаление ответа</h1>
+
+        <p>
+            Вы действительно хотите удалить ответ на заявку
+            №{{ request.id }}?
+        </p>
+
+        <p>
+            <strong>Ответ на заявку:</strong><br>
+            {{ answer.text }}
+        </p>
+        <hr>
+
+        <form method="POST" class="request-form">
+            {% csrf_token %}
+
+            <button type="submit" class="delete-button">
+                Да, удалить ответ
+            </button>
+        </form>
+        <a href="{% url 'user_requests:detail' request.id %}">
+            Отмена
+        </a>
+    </div>
+{% endblock %}

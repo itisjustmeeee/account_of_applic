@@ -7,8 +7,28 @@
         <div class="request-header">
             <h1>Заявки</h1>
             <form method="get" class="request-filter">
-                
-                {{ filter_form.as_p }}
+
+                {% for field in filter_form %}
+                    <div class="filter-field">
+                        {{ field.label_tag }}
+
+                        {{ field }}
+
+                        {% if field.errors %}
+                            <div class="field-errors">
+                                {% for error in field.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                {% if filter_form.non_field_errors %}
+                    <div class="field-errors">
+                        {{ filter_form.non_field_errors }}
+                    </div>
+                {% endif %}
 
                 <div class="filter-buttons">
                     <button type="submit">

@@ -20,6 +20,19 @@
         Приоритет:
         <strong>{{ request.get_priority_display }}</strong>
     </p>
+    {% if request.attachment %}
+        <div>
+            <h3>Вложение к заявке:</h3>
+
+            <a href="{{ request.attachment.url }}" target="_blank" rel="noopener">
+                {{ request.attachment.name }}
+            </a>
+        </div>
+    {% else %}
+        <p>
+            Нет приложенных файлов
+        </p>
+    {% endif %}
     {% if request.answer_record %}
         <h3>Ответ на заявку</h3>
         <p>

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Редактирование ответа{% endblock %}
+
+{% block content %}
+    <div class="create-request-page">
+        <h1>Редактирование ответа на заявку №{{ request.id }}</h1>
+
+        <form method="POST" class="request-form" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="form-errors">
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+                <div class="form-field">
+                    {{ field.label_tag }}
+
+                    {{ field }}
+
+                    {% for error in field.errors %}
+                        <p class="field-error">
+                            {{ error }}
+                        </p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            <hr>
+
+            <button type="submit">
+                Сохранить ответ
+            </button>
+        </form>
+        <a href="{% url 'user_requests:detail' request.id %}">
+            Отмена
+        </a>
+    </div>
+{% endblock %}

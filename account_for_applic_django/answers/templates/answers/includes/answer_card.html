@@ -12,6 +12,19 @@
         Кем отправлено:
         <strong>{{ request.user.username }}</strong>
     </p>
+    {% if request.answer_record.attachment %}
+        <div>
+            <h3>Вложение к ответу:</h3>
+
+            <a href="{{ request.answer_record.attachment.url }}" target="_blank" rel="noopener">
+                {{ request.answer_record.attachment.name }}
+            </a>
+        </div>
+    {% else %}
+        <p>
+            Нет приложенных файлов
+        </p>
+    {% endif %}
     <a
         class="page_link_page"
         href="{% url 'answers:add' request.id %}"

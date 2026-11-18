@@ -3,19 +3,20 @@
 {% block title %}Добавление категории{% endblock %}
 
 {% block content %}
-    <div class="category-form">
+    <div class="create-request-page">
         <h1>Добавление категории</h1>
 
-        <form method="post">
+        <form method="post" class="request-form">
             {% csrf_token %}
 
             {{ form.as_p }}
+
+            <hr>
 
             <button type="submit">
                 Добавить категорию
             </button>
         </form>
-
         <a href="{% url 'category:list' %}">
             Вернуться к категориям
         </a>

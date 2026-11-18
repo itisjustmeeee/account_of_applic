@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.core.validators import FileExtensionValidator
 
 
 class Answer(models.Model):
@@ -21,6 +22,17 @@ class Answer(models.Model):
 
     text = models.TextField(
         verbose_name='Текст ответа'
+    )
+
+    attachment = models.FileField(
+        upload_to='answer_attachments/%Y/%m/',
+        blank=True,
+        validators=[
+            FileExtensionValidator(
+                allowed_extensions=['pdf', 'png', 'jpg', 'jpeg', 'docx']
+            )
+        ],
+        verbose_name='Вложение',
     )
 
     created_at = models.DateTimeField(

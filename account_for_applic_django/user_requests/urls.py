@@ -10,5 +10,20 @@ urlpatterns = [
         '<int:request_id>/',
         views.request_detail,
         name='detail',
-    )
+    ),
+    path(
+        '<int:request_id>/edit/',
+        views.editRequest,
+        name='edit'
+    ),
+    path(
+        '<int:request_id>/change-status/',
+        views.changeRequestStatus,
+        name='change_status'
+    ),
+    path(
+        '<int:request_id>/delete/',
+        views.deleteRequest,
+        name='delete'
+    ),
 ]

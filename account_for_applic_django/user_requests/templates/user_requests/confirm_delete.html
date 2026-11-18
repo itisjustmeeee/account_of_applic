@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Удаление заявки{% endblock %}
+
+{% block content %}
+    <div class="create-request-page">
+        <h1>Удаление заявки</h1>
+
+        <p>
+            Вы действительно хотите удалить заявку №{{ request.id }}?
+        </p>
+
+        <p>
+            <strong>Описанная проблема:</strong><br>
+            {{ request.description }}
+        </p>
+        <hr>
+
+        <form method="POST" class="request-form">
+            {% csrf_token %}
+
+            <button type="submit">
+                Да, удалить заявку
+            </button>
+            <a href="{% url 'user_requests:detail' request.id%}">
+                Отмена
+            </a>
+        </form>
+    </div>
+{% endblock %}

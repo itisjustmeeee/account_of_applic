@@ -19,6 +19,7 @@ from django.urls import include, path, URLPattern, URLResolver
 from user_requests.views import page_not_found
 from debug_toolbar.toolbar import debug_toolbar_urls
 from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns: list[URLPattern | URLResolver] = [
     path('admin/', admin.site.urls),
@@ -32,5 +33,9 @@ urlpatterns: list[URLPattern | URLResolver] = [
 
 if settings.DEBUG:
     urlpatterns += debug_toolbar_urls()
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT
+    )
 
 handler404 = page_not_found

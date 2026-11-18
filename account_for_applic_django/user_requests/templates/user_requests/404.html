@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Страница не найдена{% endblock %}
+
+{% block content %}
+    <div class="error-page">
+        <h1>404</h1>
+
+        <h2>Страница не найдена</h2>
+
+        <p>
+            Возможно, заявка была удалена или указан неправильный адрес.
+        </p>
+
+        <a href="{% url 'user_requests:list' %}">
+            Вернуться к списку заявок
+        </a>
+    </div>
+{% endblock %}

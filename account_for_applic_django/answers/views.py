@@ -1,16 +1,16 @@
 from user_requests.models import UserRequest
 from statuses.models import RequestStatus
-from users.models import UserProfile
 from .models import Answer
 from user_requests.utils import filter_requests, paginate_queryset
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db import transaction
 from user_requests.forms import AnswerRequestFilterForm
+from .forms import AnswerCreateForm
 
 
 def answer_list(request):
 
-    filter_form = AnswerRequestFilterForm(request.GET or None)
+    filter_form = AnswerRequestFilterForm(request.GET)
 
     requests = UserRequest.objects.filter(
         answer_record__isnull=True
@@ -28,6 +28,8 @@ def answer_list(request):
             category=filter_form.cleaned_data['category'],
             priority=filter_form.cleaned_data['priority'],
         )
+    else:
+        requests = requests.none()
 
     page_obj, pagination_query = paginate_queryset(
         request,
@@ -48,79 +50,122 @@ def answer_list(request):
 
 
 def add_answer(request, request_id):
+
     current_request = get_object_or_404(
-        UserRequest,
+        UserRequest.objects.select_related(
+            'user',
+            'category',
+            'status',
+        ),
         pk=request_id,
     )
 
-    admin_profiles = UserProfile.objects.filter(
-        role='admin',
-        user__is_active=True,
-    ).select_related(
-        'user'
-    ).order_by(
-        'user__username'
-    )
-
     if Answer.objects.filter(
-        request=current_request,
+        request=current_request
     ).exists():
         return redirect('answers:list')
 
-    error = ''
-    selected_author_id = ''
+    form = AnswerCreateForm(
+        request.POST if request.method == 'POST' else None,
+        request.FILES if request.method == 'POST' else None,
+    )
 
-    if request.method == 'POST':
-        answer_text = request.POST.get(
-            'answer',
-            '',
-        ).strip()
+    if request.method == 'POST' and form.is_valid():
 
-        author_id = request.POST.get(
-            'author',
-            '',
-        )
-
-        author_profile = admin_profiles.filter(
-            user_id=author_id,
+        completed_status = RequestStatus.objects.filter(
+            name='Завершена'
         ).first()
 
-        if not answer_text:
-            error = 'Введите текст ответа'
-
-        elif author_profile is None:
-            error = 'Выберите администратора из списка'
-
-        else:
-            completed_status = get_object_or_404(
-                RequestStatus,
-                name='Завершена',
+        if completed_status is None:
+            form.add_error(
+                None,
+                'Отсутствует статус "Завершена"',
             )
-
+        else:
             with transaction.atomic():
-                Answer.objects.create(
-                    request=current_request,
-                    author=author_profile.user,
-                    text=answer_text,
-                )
+
+                answer = form.save(commit=False)
+
+                answer.request = current_request
+
+                answer.save()
 
                 current_request.status = completed_status
 
                 current_request.save(
-                    update_fields=['status'],
+                    update_fields=['status']
                 )
-            return redirect('answers:list')
 
-        if author_id.isdigit():
-            selected_author_id = int(author_id)
+            return redirect('answers:list')
 
     return render(
         request,
         'answers/add_answer.html',
         {
             'request_item': current_request,
-            'admin_profiles': admin_profiles,
-            'selected_author_id': selected_author_id,
-            'error': error,
+            'form': form,
         },
+    )
+
+
+def editAnswer(request, request_id):
+    current_request = get_object_or_404(
+        UserRequest,
+        pk=request_id
+    )
+
+    answer = get_object_or_404(
+        Answer,
+        request=current_request
+    )
+
+    form = AnswerCreateForm(
+        request.POST if request.method == 'POST' else None,
+        request.FILES if request.method == 'POST' else None,
+        instance=answer
+    )
+
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        return redirect(
+            'user_requests:detail',
+            request_id=request_id
+        )
+
+    return render(
+        request,
+        'answers/edit_answer.html',
+        {
+            'form': form,
+            'answer': answer,
+            'request': current_request,
+        }
+    )
+
+
+def deleteAnswer(request, request_id):
+    current_request = get_object_or_404(
+        UserRequest,
+        pk=request_id
+    )
+
+    answer = get_object_or_404(
+        Answer,
+        request=current_request
+    )
+
+    if request.method == 'POST':
+        answer.delete()
+        return redirect(
+            'user_requests:detail',
+            request_id=request_id
+        )
+
+    return render(
+        request,
+        'answers/confirm_delete.html',
+        {
+            'answer': answer,
+            'request': current_request,
+        }
     )

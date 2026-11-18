@@ -3,81 +3,73 @@
 {% block title %}Добавление ответа{% endblock %}
 
 {% block content %}
-<div class="create-request-page">
-    <h1>Ответ на заявку №{{ request_item.id }}</h1>
+    <div class="create-request-page">
+        <h1>Ответ на заявку №{{ request_item.id }}</h1>
 
-    <p>
-        Пользователь:
-        <strong>{{ request_item.user.username }}</strong>
-    <p>
-    <p>
-        Категория:
-        <strong>{{ request_item.category.name }}</strong>
-    </p>
-    <p>
-        Проблема:
-        {{ request_item.description }}
-    </p>
-    <p>
-        Приоритет:
-        <strong>{{ request_item.get_priority_display }}</strong>
-    </p>
-    {% if error %}
-        <p class="error">{{ error }}</p>
-    {% endif %}
-    <form
-        method="post"
-        action="{% url 'answers:add' request_item.id %}"
-        class="request-form"
-    >
-        {% csrf_token %}
-        <label for="author">
-            Кто добавляет ответ:
-        </label>
-
-        <select
-            id="author"
-            name="author"
-            required
+        <p>
+            Пользователь:
+            <strong>{{ request_item.user.username }}</strong>
+        </p>
+        <p>
+            Категория:
+            <strong>{{ request_item.category.name }}</strong>
+        </p>
+        <p>
+            Проблема:<br>
+            {{ request_item.description }}
+        </p>
+        <p>
+            Приоритет:
+            <strong>{{ request_item.get_priority_display }}</strong>
+        </p>
+        <form
+            method="POST"
+            action="{% url 'answers:add' request_item.id %}"
+            class="request-form"
+            enctype="multipart/form-data"
         >
-            <option value="">
-                Выберите администратора
-            </option>
+            {% csrf_token %}
 
-            {% for profile in admin_profiles %}
-                <option
-                    value="{{ profile.user.id }}"
-                    {% if profile.user.id == selected_author_id %}
-                        selected
+            {% if form.non_field_errors %}
+                <div class="form-errors">
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+                <div class="form-field">
+
+                    {{ field.label_tag }}
+
+                    {{ field }}
+
+                    {% if field.help_text %}
+                        <small>{{ field.help_text }}</small>
                     {% endif %}
-                >
-                    {{ profile.user.username }}
-                </option>
+
+                    {% if field.errors %}
+                        <div class="field-errors">
+                            {% for error in field.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                </div>
             {% endfor %}
-        </select>
 
-        <label for="answer">
-            Ответ на заявку:
-        </label>
+            <hr>
 
-        <textarea
-            id="answer"
-            name="answer"
-            rows="6"
-            placeholder="Введите ответ..."
-            required
-        ></textarea>
-
-        <button type="submit">
-            Отправить ответ
-        </button>
-
+            <button type="submit">
+                Отправить ответ
+            </button>
+        </form>
         <a
-            class="page-link"
             href="{% url 'answers:list' %}"
         >
-            Вернуться к списку
+            Отмена
         </a>
-    </form>
-</div>
+    </div>
 {% endblock %}

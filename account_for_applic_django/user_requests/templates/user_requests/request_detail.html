@@ -6,8 +6,56 @@
 <div class="request-page">
     {% include 'user_requests/includes/request_detail.html' %}
     <hr>
-    <a class="page_link_new" href="{% url 'user_requests:list' %}">
-        Вернуться к заявкам
-    </a>
+    <h3>Изменить статус</h3>
+
+    <form method="POST"
+        action="{% url 'user_requests:change_status' request.id %}"
+        class="status-form">
+        {% csrf_token %}
+
+        <div class="status-field">
+            {{ status_from.status.label_tag }}
+            
+            {{ status_form.status }}
+        </div>
+
+        {% for error in status_form.status.errors %}
+            <p class="field-error">{{ error }}</p>
+        {% endfor %}
+
+        {% if status_form.non_field_errors %}
+            {% for error in status_form.non_field_errors %}
+                <p class="field-error">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        {% endif %}
+
+        {% if status_form.status.value != request.status_id|stringformat:"s" %}
+            <button type="submit">
+                Изменить статус
+            </button>
+        {% endif %}
+    </form>
+    <hr>
+    <div class="request-actions">
+        <a href="{% url 'user_requests:edit' request.id %}">
+            Редактировать заявку
+        </a>
+        <a href="{% url 'user_requests:delete' request.id %}">
+            Удалить заявку
+        </a>
+        {% if request.answer_record %}
+            <a href="{% url 'answers:edit' request.id %}">
+                Редактировать ответ
+            </a>
+            <a href="{% url 'answers:delete' request.id %}">
+                Удалить ответ
+            </a>
+        {% endif %}
+        <a  href="{% url 'user_requests:list' %}">
+            Вернуться к заявкам
+        </a>
+    </div>
 </div>
 {% endblock %}

@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Case, When, Value
 from django.conf import settings
+from django.core.validators import FileExtensionValidator
 
 from category.models import Category
 from statuses.models import RequestStatus
@@ -72,6 +73,17 @@ class UserRequest(models.Model):
         output_field=models.IntegerField(),
         db_persist=False,
         verbose_name='Числовой приоритет',
+    )
+
+    attachment = models.FileField(
+        upload_to='request_attachments/%Y/%m/',
+        blank=True,
+        validators=[
+            FileExtensionValidator(
+                allowed_extensions=['pdf', 'png', 'jpg', 'jpeg', 'docx']
+            )
+        ],
+        verbose_name='Вложение',
     )
 
     created_at = models.DateTimeField(
