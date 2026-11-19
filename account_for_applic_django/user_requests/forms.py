@@ -158,6 +158,8 @@ class UserRequestUpdateForm(AttachmentSizeLimitMixin, forms.ModelForm):
             Category.objects.order_by('name')
         )
         self.fields['category'].empty_label = 'Выберите категорию'
+
+        self.fields['attachment'].required = False
         self.fields['attachment'].empty_label = 'Выберите файл'
 
 
