@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Редактирование категории{% endblock %}
+
+{% block content %}
+    <div class="create-request-page">
+        <h1>Редактирование категории - {{ category.name }}</h1>
+
+        <form method="POST" class="request-form">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="form-errors">
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+                <div class="form-field">
+                    {{ field.label_tag }}
+
+                    {{ field }}
+
+                    {% for error in field.errors %}
+                        <p class="field-error">
+                            {{ error }}
+                        </p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            <hr>
+
+            <button type="submit">
+                Сохранить
+            </button>
+        </form>
+        <a href="{% url 'category:list' %}">
+            Отмена
+        </a>
+    </div>
+{% endblock %}

@@ -6,4 +6,18 @@
     {% else %}
         <p>Нет описания</p>
     {% endif %}
+
+    <p>
+        Заявок в этой категории:<br>
+        {{ category.requests_count }}
+    </p>
+
+    <div class="request-actions">
+        <a href="{% url 'category:edit' category.id %}" class="page_link_page" >
+            Редактировать категорию
+        </a>
+        <a href="{% url 'category:delete' category.id %}" class="page_link_page">
+            Удалить категорию
+        </a>
+    </div>
 </div>

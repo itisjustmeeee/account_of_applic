@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Удаление категории{% endblock %}
+
+{% block content %}
+    <div class="create-request-page">
+        <h1>Удаление категории</h1>
+
+        <p>
+            Категория: <strong>{{ category.name }}</strong>
+        </p>
+        <p>
+            <strong>Описание категории:</strong><br>
+            {{ category.description|default:"Нет описания" }}
+        </p>
+
+        <hr>
+
+        {% if error %}
+            <div class="form-errors">
+                <p>{{ error }}</p>
+            </div>
+        {% endif %}
+
+        {% if requests_count > 0 %}
+            <p class="field-error">
+                Нельзя удалить эту категорию, так как она используется
+                в {{ requests_count }} заявках
+            </p>
+
+            <a href="{% url 'category:list' %}">
+                Вернуться к категориям
+            </a>
+        {% else %}
+
+            <p>
+                Вы действительно хотите удалить эту категорию?
+            </p>
+
+            <form method="POST" class="request-form">
+                {% csrf_token %}
+
+                <button type="submit" class="delete-button">
+                    Да, удалить категорию
+                </button>
+            </form>
+            <a href="{% url 'category:list' %}">
+                Отмена
+            </a>
+        {% endif %}
+    </div>
+{% endblock %}
